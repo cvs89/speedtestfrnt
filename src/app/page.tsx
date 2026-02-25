@@ -11,6 +11,8 @@ type ReportsResponse = {
   desktop: LighthouseReport;
 };
 
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000').replace(/\/$/, '');
+
 export default function Home() {
   const [url, setUrl] = useState('');
   const [reports, setReports] = useState<ReportsResponse | null>(null);
@@ -25,7 +27,7 @@ export default function Home() {
     setReports(null);
 
     try {
-      const response = await axios.get<ReportsResponse>(`http://localhost:8000/api/speedtest`, {
+      const response = await axios.get<ReportsResponse>(`${API_BASE_URL}/api/speedtest`, {
         params: { url },
       });
       setReports(response.data);

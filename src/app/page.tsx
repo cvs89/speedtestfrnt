@@ -3,12 +3,17 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Report from '@/components/Report';
+import type { LighthouseReport } from '@/components/Report';
 
 type ReportType = 'mobile' | 'desktop';
+type ReportsResponse = {
+  mobile: LighthouseReport;
+  desktop: LighthouseReport;
+};
 
 export default function Home() {
   const [url, setUrl] = useState('');
-  const [reports, setReports] = useState(null);
+  const [reports, setReports] = useState<ReportsResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [reportType, setReportType] = useState<ReportType>('mobile');
@@ -20,7 +25,7 @@ export default function Home() {
     setReports(null);
 
     try {
-      const response = await axios.get(`http://localhost:8000/api/speedtest`, {
+      const response = await axios.get<ReportsResponse>(`http://localhost:8000/api/speedtest`, {
         params: { url },
       });
       setReports(response.data);

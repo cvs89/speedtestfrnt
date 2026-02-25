@@ -1,5 +1,5 @@
 // src/components/Report.tsx
-interface LighthouseReport {
+export interface LighthouseReport {
   categories: {
     performance: {
       score: number;
